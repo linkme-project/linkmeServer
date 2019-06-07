@@ -1,0 +1,21 @@
+steps:
+# Download dependancies
+# TODO
+
+# Test
+# TODO
+
+# Image build
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/fido-linkme/member-service:$COMMIT_SHA', '.']
+
+# Registry push
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/fido-linkme/member-service:$COMMIT_SHA']
+
+# Deploy
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['set', 'image', 'deployment/member-service-deployment', 'member-service-sha256=gcr.io/fido-linkme/member-service:$COMMIT_SHA']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=member-service-cluster'
