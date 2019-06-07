@@ -10,7 +10,7 @@ import com.nakkunakku.linkme.util.Json;
 import com.nakkunakku.linkme.util.LinkMeException;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class UserController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
