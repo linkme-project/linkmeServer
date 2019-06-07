@@ -18,4 +18,4 @@ steps:
   args: ['set', 'image', 'deployment/member-service-deployment', 'member-service-sha256=gcr.io/fido-linkme/member-service:$COMMIT_SHA']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast1-a'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=member-service-cluster'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=linkme-backend-cluster'
