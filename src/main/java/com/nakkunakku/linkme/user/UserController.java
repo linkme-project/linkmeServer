@@ -1,5 +1,6 @@
 package com.nakkunakku.linkme.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,10 @@ import com.nakkunakku.linkme.util.LinkMeException;
 @RequestMapping("/members")
 public class UserController {
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+	@Autowired
+	private UserService userService;
+	
+    @RequestMapping(value = "/add", method = {RequestMethod.POST})
     public String addUser(@RequestBody String postBody) {
         try {
             RequestAddUser user = Json.fromJson(postBody, RequestAddUser.class);
@@ -28,6 +32,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     public String loginUser() {
+        System.out.println(userService.getCurrentDateTime());
         return "loginUser success2";
     }
 
