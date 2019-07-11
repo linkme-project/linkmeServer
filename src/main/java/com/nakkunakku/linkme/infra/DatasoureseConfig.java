@@ -6,23 +6,23 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 public class DatasoureseConfig {
+    
     @Bean
-    @ConfigurationProperties(prefix = "spring.first.datasource")
-    public DataSource firstDataSource() {
-
-        return DataSourceBuilder.create().build();
+    public DataSourceTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
-    public SqlSessionFactory firstSqlSessionFactory(DataSource firstDataSource, ApplicationContext applicationContext) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DataSource firstDataSource, ApplicationContext applicationContext) throws Exception {
 
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(firstDataSource);
@@ -31,7 +31,7 @@ public class DatasoureseConfig {
     }
 
     @Bean
-    public SqlSessionTemplate firstSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception {
+    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception {
 
         return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
     }
