@@ -3,9 +3,8 @@ package com.nakkunakku.linkme.user.model;
 import lombok.Data;
 
 @Data
-public class RequestAddUser {
+public class ResponseUserInfo {
     private String id;
-    private String passwd;
     private String email;
     private String userType;
     

@@ -5,4 +5,61 @@
     <select id="getCurrentDateTime" resultType="String">
         SELECT NOW()
     </select>
+    
+    <select id="findUser" parameterType="string" resultType="com.nakkunakku.linkme.user.model.User">
+        SELECT * FROM t_user
+        WHERE
+            id = #{userId};
+    </select>
+    
+    <select id="findDirectFund" parameterType="string" resultType="com.nakkunakku.linkme.user.model.DirectFund">
+        SELECT * FROM t_directfund
+        WHERE
+            user_id = #{userId};
+    </select>
+    
+    <select id="findGuaranteeFund" parameterType="string" resultType="com.nakkunakku.linkme.user.model.GuaranteeFund">
+        SELECT * FROM t_guaranteefund
+        WHERE
+            user_id = #{userId};
+    </select>
+    
+    <insert id="addUser" parameterType="com.nakkunakku.linkme.user.model.User">
+        INSERT INTO t_user
+            (id, passwd, email, userType, privateKey)
+        VALUES
+            (#{id}, #{passwd}, #{email}, #{userType}, "");
+    </insert>
+    
+    <insert id="addDirectFund" parameterType="com.nakkunakku.linkme.user.model.DirectFund">
+        INSERT INTO t_directfund
+            (user_id, phone_num, social_security_num)
+        VALUES
+            (#{userId}, #{phoneNum}, #{socialSecurityNum});
+    </insert>
+    
+    <insert id="addGuaranteeFund" parameterType="com.nakkunakku.linkme.user.model.GuaranteeFund">
+        INSERT INTO t_guaranteefund
+            (user_id, bank_name, bank_number)
+        VALUES
+            (#{userId}, #{bankName}, #{bankNumber});
+    </insert>
+    
+    <delete id="deleteUser" parameterType="string">
+        DELETE FROM t_user
+        WHERE
+            id=#{userId};
+    </delete>
+    
+    <delete id="deleteDirectFund" parameterType="string">
+        DELETE FROM t_directfund
+        WHERE
+            user_id=#{userId};
+    </delete>
+    
+    <delete id="deleteGuaranteeFund" parameterType="string">
+        DELETE FROM t_guaranteefund
+        WHERE
+            user_id=#{userId};
+    </delete>
 </mapper>
