@@ -45,6 +45,24 @@
             (#{userId}, #{bankName}, #{bankNumber});
     </insert>
     
+    <update id="updateUser" parameterType="com.nakkunakku.linkme.user.model.RequestUpdateUser">
+        UPDATE t_user
+        SET passwd=#{passwd}, email=#{email}
+        WHERE id=#{id};
+    </update>
+    
+    <update id="updateDirectFund" parameterType="com.nakkunakku.linkme.user.model.DirectFund">
+        UPDATE t_directfund
+        SET phone_num=#{phoneNum}, social_security_num=#{socialSecurityNum}
+        WHERE user_id=#{userId};
+    </update>
+
+    <update id="updateGuaranteeFund" parameterType="com.nakkunakku.linkme.user.model.GuaranteeFund">
+        UPDATE t_guaranteefund
+        SET bank_name=#{bankName}, bank_number=#{bankNumber}
+        WHERE user_id=#{userId};
+    </update>
+    
     <delete id="deleteUser" parameterType="string">
         DELETE FROM t_user
         WHERE

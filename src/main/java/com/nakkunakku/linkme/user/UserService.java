@@ -2,11 +2,13 @@ package com.nakkunakku.linkme.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nakkunakku.linkme.user.model.DirectFund;
 import com.nakkunakku.linkme.user.model.GuaranteeFund;
 import com.nakkunakku.linkme.user.model.RequestAddUser;
 import com.nakkunakku.linkme.user.model.RequestDeleteUser;
+import com.nakkunakku.linkme.user.model.RequestUpdateUser;
 import com.nakkunakku.linkme.user.model.RequestUserInfo;
 import com.nakkunakku.linkme.user.model.ResponseUserInfo;
 import com.nakkunakku.linkme.user.model.User;
@@ -23,6 +25,7 @@ public class UserService {
         return userRepository.getLocalTime();
     }
 
+    @Transactional
     public String addUser(RequestAddUser requestAddUser) {
         User user = new User(requestAddUser);
         userRepository.addUser(user);
@@ -41,6 +44,7 @@ public class UserService {
         return "success";
     }
 
+    @Transactional
     public String deleteUser(RequestDeleteUser requestAddUser) {
         User user = userRepository.findUser(requestAddUser.getId());
         if (user == null) {
@@ -74,6 +78,7 @@ public class UserService {
         return "success";
     }
     
+    @Transactional
     public String findUser(RequestUserInfo requestUserInfo) throws LinkMeException {
         ResponseUserInfo responseUserInfo = new ResponseUserInfo();
         User user = userRepository.findUser(requestUserInfo.getId());
@@ -108,5 +113,34 @@ public class UserService {
         }
         
         return Json.toJson(responseUserInfo);
+    }
+    
+    @Transactional
+    public String updateUser(RequestUpdateUser requestUpdateUser) {
+        User user = userRepository.findUser(requestUpdateUser.getId());
+        if (user == null) {
+            return "user no exist";
+        }
+        
+        if (!user.getPasswd().equals(requestUpdateUser.getPasswd())) {
+            return "invalid password";
+        }
+        
+        User newUser = new User(requestUpdateUser);
+        userRepository.updateUser(newUser);
+        
+        if (requestUpdateUser.getUserType().equals(User.UserType.GuaranteeFund.name())) {
+            GuaranteeFund guaranteeFund = new GuaranteeFund(requestUpdateUser);
+            userRepository.updateGuaranteeFund(guaranteeFund);
+            
+        } else if (requestUpdateUser.getUserType().equals(User.UserType.DirectFund.name())) {
+            DirectFund directFund = new DirectFund(requestUpdateUser);
+            userRepository.updateDirectFund(directFund);
+            
+        } else {
+            return "user no exist";
+        }
+        
+        return "success";
     }
 }

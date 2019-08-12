@@ -15,4 +15,10 @@ public class DirectFund {
         this.phoneNum = requestAddUser.getDirectFund().getPhoneNum();
         this.socialSecurityNum = requestAddUser.getDirectFund().getSocialSecurityNum();
     }
+    
+    public DirectFund(RequestUpdateUser requestUpdateUser) {
+        this.userId = requestUpdateUser.getId();
+        this.phoneNum = requestUpdateUser.getDirectFund().getPhoneNum();
+        this.socialSecurityNum = requestUpdateUser.getDirectFund().getSocialSecurityNum();
+    }
 }

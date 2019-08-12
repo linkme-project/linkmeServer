@@ -15,4 +15,10 @@ public class GuaranteeFund {
         this.bankName = requestAddUser.getGuaranteeFund().getBankName();
         this.bankNumber = requestAddUser.getGuaranteeFund().getBankNumber();
     }
+    
+    public GuaranteeFund(RequestUpdateUser requestUpdateUser) {
+        this.userId = requestUpdateUser.getId();
+        this.bankName = requestUpdateUser.getGuaranteeFund().getBankName();
+        this.bankNumber = requestUpdateUser.getGuaranteeFund().getBankNumber();
+    }
 }

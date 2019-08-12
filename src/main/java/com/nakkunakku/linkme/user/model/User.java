@@ -15,11 +15,18 @@ public class User {
     public enum UserType {
         GuaranteeFund, DirectFund
     }
-    
+
     public User(RequestAddUser requestAddUser) {
         this.id = requestAddUser.getId();
         this.passwd = requestAddUser.getPasswd();
         this.email = requestAddUser.getEmail();
         this.userType = requestAddUser.getUserType();
+    }
+    
+    public User(RequestUpdateUser requestUpdateUser) {
+        this.id = requestUpdateUser.getId();
+        this.passwd = requestUpdateUser.getNewPasswd();
+        this.email = requestUpdateUser.getEmail();
+        this.userType = requestUpdateUser.getUserType();
     }
 }

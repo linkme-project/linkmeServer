@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nakkunakku.linkme.user.model.RequestAddUser;
 import com.nakkunakku.linkme.user.model.RequestDeleteUser;
+import com.nakkunakku.linkme.user.model.RequestUpdateUser;
 import com.nakkunakku.linkme.user.model.RequestUserInfo;
 import com.nakkunakku.linkme.util.Json;
 import com.nakkunakku.linkme.util.LinkMeException;
@@ -62,8 +63,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateUserInfo() {
-        return "updateUserInfo does not support";
+    public String updateUserInfo(@RequestBody String postBody) {
+        try {
+            RequestUpdateUser requestUpdateUser = Json.fromJson(postBody, RequestUpdateUser.class);
+            System.out.println(Json.toJson(requestUpdateUser));
+            
+            return userService.updateUser(requestUpdateUser);
+        } catch (LinkMeException e) {
+            return e.getErrorCode();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
     
     @RequestMapping(value = "/info", method = {RequestMethod.POST, RequestMethod.GET})

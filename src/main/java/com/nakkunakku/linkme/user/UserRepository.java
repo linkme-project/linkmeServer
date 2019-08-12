@@ -41,6 +41,16 @@ public class UserRepository {
         return sqlSession.selectOne("user.findGuaranteeFund", userId);
     }
     
+    public void updateUser(User user) {
+        sqlSession.update("user.updateUser", user);
+    }
+    public void updateDirectFund(DirectFund directFund) {
+        sqlSession.update("user.updateDirectFund", directFund);
+    }
+    public void updateGuaranteeFund(GuaranteeFund guaranteeFund) {
+        sqlSession.update("user.updateGuaranteeFund", guaranteeFund);
+    }
+    
     public int deleteUser(String userId) {
         return sqlSession.delete("user.deleteUser", userId);
     }
