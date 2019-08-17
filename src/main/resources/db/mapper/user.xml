@@ -24,6 +24,12 @@
             user_id = #{userId};
     </select>
     
+    <select id="findFundSeller" parameterType="string" resultType="com.nakkunakku.linkme.user.model.FundSeller">
+        SELECT * FROM t_fundseller
+        WHERE
+            user_id = #{userId};
+    </select>
+    
     <insert id="addUser" parameterType="com.nakkunakku.linkme.user.model.User">
         INSERT INTO t_user
             (id, passwd, email, userType, privateKey)
@@ -40,6 +46,13 @@
     
     <insert id="addGuaranteeFund" parameterType="com.nakkunakku.linkme.user.model.GuaranteeFund">
         INSERT INTO t_guaranteefund
+            (user_id, bank_name, bank_number)
+        VALUES
+            (#{userId}, #{bankName}, #{bankNumber});
+    </insert>
+    
+    <insert id="addFundSeller" parameterType="com.nakkunakku.linkme.user.model.FundSeller">
+        INSERT INTO t_fundseller
             (user_id, bank_name, bank_number)
         VALUES
             (#{userId}, #{bankName}, #{bankNumber});
@@ -62,6 +75,12 @@
         SET bank_name=#{bankName}, bank_number=#{bankNumber}
         WHERE user_id=#{userId};
     </update>
+
+    <update id="updateFundSeller" parameterType="com.nakkunakku.linkme.user.model.FundSeller">
+        UPDATE t_fundseller
+        SET bank_name=#{bankName}, bank_number=#{bankNumber}
+        WHERE user_id=#{userId};
+    </update>
     
     <delete id="deleteUser" parameterType="string">
         DELETE FROM t_user
@@ -77,6 +96,12 @@
     
     <delete id="deleteGuaranteeFund" parameterType="string">
         DELETE FROM t_guaranteefund
+        WHERE
+            user_id=#{userId};
+    </delete>
+    
+    <delete id="deleteFundSeller" parameterType="string">
+        DELETE FROM t_fundSeller
         WHERE
             user_id=#{userId};
     </delete>

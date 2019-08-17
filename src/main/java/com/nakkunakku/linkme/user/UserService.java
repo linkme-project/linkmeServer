@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nakkunakku.linkme.user.model.DirectFund;
+import com.nakkunakku.linkme.user.model.FundSeller;
 import com.nakkunakku.linkme.user.model.GuaranteeFund;
 import com.nakkunakku.linkme.user.model.RequestAddUser;
 import com.nakkunakku.linkme.user.model.RequestDeleteUser;
@@ -36,6 +37,9 @@ public class UserService {
         } else if (user.getUserType().equals(User.UserType.DirectFund.name())) {
             DirectFund directFund = new DirectFund(requestAddUser);
             userRepository.addDirectFund(directFund);
+        } else if (user.getUserType().equals(User.UserType.FundSeller.name())) {
+        	FundSeller fundSeller = new FundSeller(requestAddUser);
+        	userRepository.addFundSeller(fundSeller);
         } else {
             // throw exception
             return null;
@@ -69,6 +73,13 @@ public class UserService {
             }
 
             userRepository.deleteDirectFund(directFund.getUserId());
+        } else if (user.getUserType().equals(User.UserType.FundSeller.name())) {
+        	FundSeller fundSeller = userRepository.findFundSeller(user.getId());
+            if (fundSeller == null) {
+                return "user no exist";
+            }
+
+            userRepository.deleteFundSeller(fundSeller.getUserId());
         } else {
             return "user no exist";
         }
@@ -108,6 +119,13 @@ public class UserService {
             }
             
             responseUserInfo.setDirectFund(directFund);
+        } else if (user.getUserType().equals(User.UserType.FundSeller.name())) {
+        	 FundSeller fundSeller = userRepository.findFundSeller(user.getId());
+             if (fundSeller == null) {
+                 return "user no exist";
+             }
+             
+             responseUserInfo.setFundSeller(fundSeller);
         } else {
             return "user no exist";
         }
@@ -136,6 +154,10 @@ public class UserService {
         } else if (requestUpdateUser.getUserType().equals(User.UserType.DirectFund.name())) {
             DirectFund directFund = new DirectFund(requestUpdateUser);
             userRepository.updateDirectFund(directFund);
+            
+        } else if (user.getUserType().equals(User.UserType.FundSeller.name())) {
+            FundSeller fundSeller = new FundSeller(requestUpdateUser);
+            userRepository.updateFundSeller(fundSeller);
             
         } else {
             return "user no exist";

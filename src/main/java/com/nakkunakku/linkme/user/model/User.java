@@ -13,7 +13,7 @@ public class User {
     private String privateKey;
     
     public enum UserType {
-        GuaranteeFund, DirectFund
+        GuaranteeFund, DirectFund, FundSeller
     }
 
     public User(RequestAddUser requestAddUser) {

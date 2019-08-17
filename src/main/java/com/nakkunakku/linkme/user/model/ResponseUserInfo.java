@@ -10,4 +10,5 @@ public class ResponseUserInfo {
     
     private GuaranteeFund guaranteeFund;
     private DirectFund directFund;
+    private FundSeller fundSeller;
 }
